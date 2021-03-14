@@ -1,0 +1,25 @@
+server:
+  port: 80
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+    register-with-eureka: false # 不去注册
+ribbon:
+  #指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间
+  ReadTimeout: 5000
+  #指的是建立连接后从服务器读取到可用资源所用的时间
+  ConnectTimeout: 5000
+feign:
+  hystrix:
+    enabled: true
+hystrix:  #hystrix 我也不清楚为什么 如果开启上面的 feign 就会默认服务降级时间为1S 这个修改为10S  不开启好像也没什么问题
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+logging:
+  level:
+    com.rjq.cloud: debug
